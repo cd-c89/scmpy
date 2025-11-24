@@ -19,11 +19,11 @@ else:
     curr = scm["commit"]
     old_fs = [f for f in curr[-1]["init"]] + [f for f in curr[-1]["diff"]]
     new_fs = [f for f in fs if fs not in old_fs]
-    init = {f:open(f).read() for f in new_fs}
+    init = {f:open(f).read().splitlines() for f in new_fs if f not in old_fs}
     # We use unified diff from difflib since it still works with patch.
     diff = {f:diff_lines(late[f],open(f).read().splitlines()) for f in old_fs}
     scm["latest"] = {f:open(f).read().splitlines() for f in fs}
     scm["commit"].append({"init":init,"diff":diff})
     json.dump(scm, open(".scm","w"))
-
-# Trivial Comment
+    
+# Trivial comment
