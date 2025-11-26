@@ -3,9 +3,7 @@
 import os, sys, json, subprocess, difflib
 
 # diff helper
-diff_lines = lambda ls_0, ls_1: "".join(
-    [line for line in difflib.unified_diff(ls_0, ls_1)]
-)
+diff_lines = lambda ls_0, ls_1: list(difflib.unified_diff(ls_0, ls_1))
 
 # saves current version to .scm
 def commit():
@@ -52,10 +50,13 @@ def revert():
     print("what up")
 
 
-def main():
-    args = sys.argv
-    len(args) == 2 and {"commit": commit, "scrape": scrape, "revert": revert}[args[1]]()
+viewer = lambda: os.system(
+    "jq . .scm"
+)  # print(json.dumps(json.load(open(".scm")), indent=4))
 
-
-if __name__ == "__main__":
-    main()
+__name__ == "__main__" and len(sys.argv) == 2 and {
+    "commit": commit,
+    "scrape": scrape,
+    "revert": revert,
+    "viewer": viewer,
+}[sys.argv[1]]()
