@@ -41,7 +41,7 @@ def commit():
 def scrape():
     (not os.path.isfile(".scm") or os.path.getsize(".scm") == 0) and exit()
     [
-        open(k, "w").writelines(v)
+        open(k, "w").write("\n".join(v))
         for k, v in json.loads(open(".scm", "r").read())["latest"].items()
     ]
 
