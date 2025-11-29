@@ -44,10 +44,15 @@ def scrape():
     ]
 
 
+# let's just roll back one, that's logically equivalent
 def revert():
-    # let's just roll back one, that's logically equivalent
-    # scrape()
-    print("what up")
+    scrape()
+    scm = json.loads(open(".scm", "r").read())
+    late = scm["latest"]
+    curr = scm["commit"]
+    len(curr) < 2 and exit()
+    last = l.pop()["diff"]
+    [os.system("echo " + "\n".join(v) + " | patch -R " + k) for k, v in last.items()]
 
 
 viewer = lambda: os.system(
