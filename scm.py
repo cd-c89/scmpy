@@ -58,11 +58,14 @@ def revert():
     for k, v in last.items():
         open(DIFF_NAME, "w").write("\n".join(v))
         os.system("patch -R " + k + " " + DIFF_NAME)
-
+    json.dump(scm, open(SCM_NAME, "w"))
+    os.delete(DIFF_NAME)
 
 viewer = lambda: os.system(
     "jq . .scm"
 )  # print(json.dumps(json.load(open(SCM_NAME)), indent=4))
+
+# Trivial Comment
 
 __name__ == "__main__" and len(sys.argv) == 2 and {
     "commit": commit,
@@ -70,6 +73,3 @@ __name__ == "__main__" and len(sys.argv) == 2 and {
     "revert": revert,
     "viewer": viewer,
 }[sys.argv[1]]()
-
-# Trivial Comment
-
