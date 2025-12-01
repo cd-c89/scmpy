@@ -6,7 +6,10 @@ SCM_NAME = ".scm"
 DIFF_NAME = ".diff"
 
 # diff helper
-diff_lines = lambda ls_0, ls_1: [line.rstrip() for line in list(difflib.unified_diff(ls_0, ls_1))]
+diff_lines = lambda ls_0, ls_1: [
+    line.rstrip() for line in list(difflib.unified_diff(ls_0, ls_1))
+]
+
 
 # saves current version to .scm
 def commit():
@@ -60,6 +63,7 @@ def revert():
         os.system("patch -R " + k + " " + DIFF_NAME)
     json.dump(scm, open(SCM_NAME, "w"))
     os.delete(DIFF_NAME)
+
 
 viewer = lambda: os.system(
     "jq . .scm"
